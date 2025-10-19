@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600&display=swap');
 
 :root {
-  --accent: #66ccff;
-  --bg: #fafafa;
-  --text: #333;
-  --card-bg: #fff;
+  --accent: #7fc8ff;
+  --bg: radial-gradient(circle at 20% 20%, #1a1a40, #0a0a20 80%);
+  --text: #e6ecff;
+  --card-bg: rgba(255, 255, 255, 0.08);
 }
 
 body {
@@ -12,25 +12,64 @@ body {
   margin: 0;
   color: var(--text);
   background: var(--bg);
-  line-height: 1.7;
+  line-height: 1.8;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
 }
 
+/* 星の演出 */
+body::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: transparent;
+  background-image: radial-gradient(2px 2px at 20px 30px, white, transparent),
+                    radial-gradient(2px 2px at 200px 100px, white, transparent),
+                    radial-gradient(1.5px 1.5px at 400px 300px, #aaf, transparent),
+                    radial-gradient(1px 1px at 600px 150px, #fff, transparent),
+                    radial-gradient(1.5px 1.5px at 800px 400px, #ccf, transparent),
+                    radial-gradient(1px 1px at 1200px 200px, #fff, transparent);
+  background-repeat: repeat;
+  background-size: 800px 600px;
+  animation: twinkle 15s linear infinite;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes twinkle {
+  from { transform: translateY(0); }
+  to { transform: translateY(-200px); }
+}
+
+/* ヘッダー */
 header {
   text-align: center;
   padding: 1.5rem 0;
-  background: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 1;
 }
 
 header h1 {
   margin: 0;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 600;
+  color: #d0ddff;
 }
 
+/* ヒーロー */
 #hero {
   text-align: center;
   padding: 3rem 1rem 2rem;
+  position: relative;
+  z-index: 1;
 }
 
 .avatar {
@@ -38,34 +77,38 @@ header h1 {
   height: 96px;
   border-radius: 50%;
   margin-bottom: 1rem;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  box-shadow: 0 0 12px rgba(120, 180, 255, 0.5);
 }
 
 #hero h2 {
-  font-size: 1.4rem;
-  margin: 0.5rem 0;
+  font-size: 1.3rem;
+  margin: 0.6rem 0;
+  color: #c8d6ff;
 }
 
 #hero p {
-  color: #555;
+  color: #aab8ff;
   font-size: 1rem;
 }
 
-/* リンクカードセクション */
+/* リンクカード */
 #links {
-  padding: 2rem 1rem 3rem;
+  padding: 2.5rem 1rem 3rem;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 #links h2 {
   margin-bottom: 1.5rem;
+  color: #d9e6ff;
 }
 
 .link-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 1rem;
-  max-width: 720px;
+  gap: 1.5rem;
+  max-width: 800px;
   margin: 0 auto;
 }
 
@@ -77,21 +120,31 @@ header h1 {
   padding: 1rem 1.2rem;
   text-decoration: none;
   color: var(--text);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 40, 0.4);
+  transition: transform 0.25s ease, background 0.3s ease;
 }
 
 .link-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.15);
 }
 
+/* ロゴの見やすさ向上 */
 .link-card img {
   width: 48px;
   height: 48px;
   flex-shrink: 0;
   margin-right: 1rem;
-  border-radius: 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 6px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.link-card:hover img {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 12px rgba(180, 220, 255, 0.6);
 }
 
 .link-card .info {
@@ -101,46 +154,55 @@ header h1 {
 .link-card h3 {
   margin: 0;
   font-size: 1.1rem;
+  color: #dce3ff;
 }
 
 .link-card .id {
-  color: #666;
+  color: #b8c4ff;
   font-size: 0.9rem;
   margin: 0.2rem 0;
 }
 
 .link-card .desc {
-  color: #555;
+  color: #9fb0ff;
   font-size: 0.9rem;
   margin: 0;
 }
 
-/* 各SNSごとの色味 */
-.link-card.misskey { background: #e0f6ea; }
-.link-card.github  { background: #f4f4f4; }
-.link-card.bluesky { background: #e4efff; }
-.link-card.x       { background: #efefef; }
+/* SNS色のわずかな差 */
+.link-card.misskey { background: rgba(120, 200, 255, 0.08); }
+.link-card.github  { background: rgba(200, 200, 200, 0.08); }
+.link-card.x       { background: rgba(180, 180, 180, 0.08); }
 
 /* 自己紹介 */
 #about {
-  background: white;
+  background: rgba(255, 255, 255, 0.06);
   padding: 3rem 1.5rem;
   text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 1;
 }
 
 #about h2 {
   margin-bottom: 1.5rem;
+  color: #d0dcff;
 }
 
 #about p {
   max-width: 700px;
   margin: 0 auto;
-  color: #555;
+  color: #b8c7ff;
+  line-height: 1.9;
 }
 
+/* フッター */
 footer {
   text-align: center;
   padding: 1.5rem;
   font-size: 0.9rem;
-  color: #777;
+  color: #8490c0;
+  position: relative;
+  z-index: 1;
 }

@@ -7,21 +7,27 @@
   --card-bg: rgba(255, 255, 255, 0.08);
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: 'Noto Sans JP', system-ui, sans-serif;
-  margin: 0;
   color: var(--text);
   background: var(--bg);
   line-height: 1.8;
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 /* 星の演出 */
 body::before {
   content: "";
-  position: absolute;
+  position: fixed; /* ← absolute から fixed に変更 */
   width: 200%;
   height: 200%;
   top: -50%;
@@ -44,6 +50,13 @@ body::before {
 @keyframes twinkle {
   from { transform: translateY(0); }
   to { transform: translateY(-200px); }
+}
+
+/* コンテンツ全体を main に包んで伸縮制御 */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ヘッダー */
@@ -177,7 +190,7 @@ header h1 {
 /* 自己紹介 */
 #about {
   background: rgba(255, 255, 255, 0.06);
-  padding: 3rem 1.5rem;
+  padding: 2rem 1.5rem 4rem;
   text-align: center;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -205,4 +218,5 @@ footer {
   color: #8490c0;
   position: relative;
   z-index: 1;
+  margin-top: auto; /* ← 下部固定で余白防止 */
 }
